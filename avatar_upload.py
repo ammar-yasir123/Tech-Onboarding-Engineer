@@ -42,7 +42,7 @@ for user in userid_list:
     url_id = url+"{}".format(user)
     
 
-    #Check if user profile picture exists using 'externalID' and list of valid formats
+    #Check if user profile picture exists using user ID and list of valid formats
     for i in IMAGE_FORMATS:
         #Check if file is valid image
         try:
