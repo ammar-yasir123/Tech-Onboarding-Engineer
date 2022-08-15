@@ -27,6 +27,9 @@ IMAGE_FORMATS = ('bmp', 'BMP', 'jpeg', 'JPEG', 'png', 'PNG', 'tiff', 'TIFF')
 #API URL
 url = "https://de.staffbase.com/api/users/"
 
+#Authorization token
+auth = {'Authorization': 'TOK:<MY_TOKEN>'}
+
 #Read csv file and store in Dataframe
 df = pd.read_csv(CSV_FILEPATH)
 
@@ -42,7 +45,7 @@ for user in userid_list:
     url_id = url+"{}".format(user)
     
 
-    #Check if user profile picture exists using user ID and list of valid formats
+    #Check if user profile picture exists using 'externalID' and list of valid formats
     for i in IMAGE_FORMATS:
         #Check if file is valid image
         try:
@@ -54,10 +57,10 @@ for user in userid_list:
     
     
             #Create header using userID and providing avatar image in folder
-            header = {"userID":user,"avatar":pic_name}
+            data = {"userID":user,"avatar":pic_name}
                     
             #Send PUT request to create new field called 'avatar' and upload profile picture
-            r = requests.put(url+' / put', data=header)
+            r = requests.put(url, data=data, authorization=auth)
             
             #Change value of PUT URL for next entry
             url_id = url
@@ -69,6 +72,3 @@ for user in userid_list:
 #            print (e)
             continue
     
-        
-    else:
-        print("Valid profile picture for userID: {} not found in folder.".format(user))
