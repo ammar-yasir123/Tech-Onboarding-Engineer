@@ -28,7 +28,7 @@ IMAGE_FORMATS = ('bmp', 'BMP', 'jpeg', 'JPEG', 'png', 'PNG', 'tiff', 'TIFF')
 url = "https://de.staffbase.com/api/users/"
 
 #Authorization token
-auth = {'Authorization': 'TOK:<MY_TOKEN>'}
+auth = {"content-type": "application/json", "Authorization": "<auth-key>" }
 
 #Read csv file and store in Dataframe
 df = pd.read_csv(CSV_FILEPATH)
@@ -60,14 +60,14 @@ for user in userid_list:
             data = {"userID":user,"avatar":pic_name}
                     
             #Send PUT request to create new field called 'avatar' and upload profile picture
-            r = requests.put(url, data=data, authorization=auth)
+            r = requests.put(url, data=data, headers=auth)
             
             #Change value of PUT URL for next entry
             url_id = url
             
         #Continue if image with specific format doesn't exist
         except Exception as e:
-            
+                
         #Uncomment to print exception error
 #            print (e)
             continue
